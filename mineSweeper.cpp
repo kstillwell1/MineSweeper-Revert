@@ -16,13 +16,9 @@ MineSweeperGame::~MineSweeperGame()
 	{
 		for (int i = 0; i < getNumRows(); i++)
 		{
-			for (int c = 0; c < getNumCols(); c++)
-			{
-				board.board[i][c].~Tile();
-			}
 			Pool.free(board.board[i]);
 		}
-		Pool.free(board.board);
+		delete[] board.board;
 	}
 }
 
@@ -72,13 +68,11 @@ std::pair<int, int> MineSweeperGame::getCurrentCoords()
 
 void MineSweeperGame::allocateBoard(int row, int col, int mines)
 {
-	size_t rowByteSize = sizeof(Tile*) * row;
-	size_t colByteSize = sizeof(Tile) * col;
-	board.board = reinterpret_cast<Tile**>(Pool.allocate(rowByteSize));
+	board.board = new Tile * [row];
 
 	for (int i = 0; i < row; i++)
 	{
-		board.board[i] = reinterpret_cast<Tile*>(Pool.allocate(colByteSize));
+		board.board[i] = Pool.allocate(col);
 	}
 
 	setMines(mines);
@@ -152,13 +146,9 @@ void MineSweeperGame::setDifficulty(int rows, int cols, int mines)
 		{
 			for (int i = 0; i < getNumRows(); i++)
 			{
-				for (int c = 0; c < getNumCols(); c++)
-				{
-					board.board[i][c].~Tile();
-				}
 				Pool.free(board.board[i]);
 			}
-			Pool.free(board.board);
+			delete[] board.board;
 		}
 
 		setNumRows(rows);
