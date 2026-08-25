@@ -13,9 +13,9 @@ private:
 	int currNumCols = 0;
 	int currNumMines = 0;
 
-	int easyRows = 9, easyCols = 9, easyMines = 10;
-	int mediumRows = 16, mediumCols = 16, mediumMines = 40;
-	int hardRows = 25, hardCols = 25, hardMines = 99;
+	const int easyRows = 9, easyCols = 9, easyMines = 10;
+	const int mediumRows = 16, mediumCols = 16, mediumMines = 40;
+	const int hardRows = 25, hardCols = 25, hardMines = 99;
 
 
 	void allocateBoard(int row, int col, int mines);
