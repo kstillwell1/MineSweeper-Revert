@@ -12,10 +12,10 @@ MemoryPool::~MemoryPool()
 
 void* MemoryPool::allocate(size_t bytes)
 {
-	return nullptr;
+    return ::operator new(bytes);
 }
 
 void MemoryPool::free(void* ptr)
 {
-
+    ::operator delete(ptr);
 }
