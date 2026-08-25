@@ -1,4 +1,5 @@
 #include "memoryPool.h"
+#include "tile.h"
 
 MemoryPool::MemoryPool()
 {
@@ -10,12 +11,12 @@ MemoryPool::~MemoryPool()
 
 }
 
-void* MemoryPool::allocate(size_t bytes)
+Tile* MemoryPool::allocate(size_t count)
 {
-    return ::operator new(bytes);
+    return new Tile[count];
 }
 
-void MemoryPool::free(void* ptr)
+void MemoryPool::free(Tile* ptr)
 {
-    ::operator delete(ptr);
+    delete[] ptr;
 }
