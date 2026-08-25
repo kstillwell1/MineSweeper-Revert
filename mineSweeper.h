@@ -1,5 +1,6 @@
 #pragma once
 #include "tile.h"
+#include "memoryPool.h"
 #include <string>
 
 class MineSweeperGame
@@ -17,6 +18,7 @@ private:
 	const int mediumRows = 16, mediumCols = 16, mediumMines = 40;
 	const int hardRows = 25, hardCols = 25, hardMines = 99;
 
+	MemoryPool Pool;
 
 	void allocateBoard(int row, int col, int mines);
 	void setMines(int mines);
