@@ -68,7 +68,7 @@ std::pair<int, int> MineSweeperGame::getCurrentCoords()
 
 void MineSweeperGame::allocateBoard(int row, int col, int mines)
 {
-	board.board = new Tile * [row];
+	board.board = new Tile* [row];
 
 	for (int i = 0; i < row; i++)
 	{
