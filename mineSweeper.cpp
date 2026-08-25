@@ -10,15 +10,6 @@
 #include <conio.h>
 #include <sstream>
 
-//add replayability - DONE
-//handle crash from seleting easy and then medium, start in allocate board and look at the way its being deleted - DONE
-//counter of flagged tiles - DONE
-//add explosion effect if you hit mine - DONE
-//show the difference between correct and incorrect flags made by user when game ends - DONE
-//add sounds
-//reset new board if the size is the same.
-//https://www.geeksforgeeks.org/system-design/what-is-a-memory-pool/#types-of-memory-pools -- read, read placement new, TODO: create fixed size block memory pool
-
 MineSweeperGame::~MineSweeperGame()
 {
 	if (board.board != nullptr)
@@ -78,11 +69,14 @@ std::pair<int, int> MineSweeperGame::getCurrentCoords()
 
 void MineSweeperGame::allocateBoard(int row, int col, int mines)
 {
-	board.board = new Tile* [row];
+	//board.board = new Tile* [row]; //72 bytes
+	size_t rowByteSize = sizeof(Tile*) * row;
+	size_t colByteSize = sizeof(Tile) * col;
+	board.board = reinterpret_cast<Tile**>(Pool.allocate(rowByteSize));
 
 	for (int i = 0; i < row; i++)
 	{
-		board.board[i] = new Tile[col];
+		board.board[i] = reinterpret_cast<Tile*>(Pool.allocate(colByteSize));
 	}
 
 	setMines(mines);
@@ -646,6 +640,8 @@ void MineSweeperGame::postGameQuestions()
 
 void MineSweeperGame::gameLoop()
 {
+	std::cout << sizeof(Tile*) << std::endl;
+	std::cout << sizeof(Tile) << std::endl;
 	srand(time(NULL));
 	while (!playAgain)
 	{
