@@ -1,10 +1,11 @@
 #pragma once
+#include "tile.h"
 
 class MemoryPool
 {
 public:
-	void* allocate(size_t bytes);
-	void free(void* ptr);
+	Tile* allocate(size_t count);
+	void free(Tile* ptr);
 
 	MemoryPool();
 	~MemoryPool();
